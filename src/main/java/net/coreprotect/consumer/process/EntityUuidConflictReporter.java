@@ -6,6 +6,8 @@ import java.util.function.Consumer;
 import java.util.function.LongSupplier;
 import java.util.logging.Logger;
 
+import net.coreprotect.language.Phrase;
+
 final class EntityUuidConflictReporter {
     private static final long INTERVAL_NANOS = TimeUnit.MINUTES.toNanos(5);
     private final LongSupplier clock;
@@ -17,7 +19,7 @@ final class EntityUuidConflictReporter {
     private UUID lastUuid;
 
     EntityUuidConflictReporter() {
-        this(System::nanoTime, message -> Logger.getLogger("CoreProtect").warning("[CoreProtect] " + message));
+        this(System::nanoTime, message -> Logger.getLogger("CoreProtect").warning("[CoreProtect]" + message));
     }
 
     EntityUuidConflictReporter(LongSupplier clock, Consumer<String> warning) {

@@ -77,7 +77,7 @@ public abstract class BaseInspector {
         }
         catch (RejectedExecutionException e) {
             LookupThrottle.release(player.getName());
-            Chat.sendMessage(player, Color.DARK_AQUA + "CoreProtect " + Color.WHITE + "- " + Phrase.build(Phrase.DATABASE_BUSY));
+            Chat.sendMessage(player, Phrase.build(Phrase.PREFIX) + Phrase.build(Phrase.DATABASE_BUSY));
         }
         catch (RuntimeException | Error e) {
             LookupThrottle.release(player.getName());

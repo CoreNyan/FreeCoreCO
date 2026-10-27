@@ -11,7 +11,10 @@ import net.coreprotect.language.Selector;
 import net.coreprotect.listener.channel.PluginChannelListener;
 import net.coreprotect.model.action.LookupActions;
 import net.coreprotect.utility.*;
+
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Server.Spigot;
 import org.bukkit.block.BlockState;
 import org.bukkit.command.CommandSender;
 
@@ -121,6 +124,7 @@ public class BlockLookup {
                         continue;
                     }
                 }
+
                 int resultUserId = results.getInt("user");
                 int resultAction = results.getInt("action");
                 int resultType = results.getInt("type");
@@ -130,6 +134,9 @@ public class BlockLookup {
 
                 String resultUser = UserStatement.getName(statement.getConnection(), resultUserId);
                 String timeAgo = ChatUtils.getTimeSince(resultTime, time, true);
+
+                //不显示OP的记录
+                if(PlayerUtils.shouldHideLookup(commandSender, resultUser)) continue;
 
                 if (!found) {
                     resultTextBuilder = new StringBuilder(Color.WHITE + "----- " + Color.DARK_AQUA + "CoreProtect " + Color.WHITE + "----- " + ChatUtils.getCoordinates(command, worldId, x, y, z, false, false) + "\n");

@@ -9,6 +9,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
+import net.coreprotect.language.Phrase;
 import net.coreprotect.spigot.SpigotAdapter;
 
 public final class Chat {
@@ -59,27 +60,27 @@ public final class Chat {
             Bukkit.getLogger().log(Level.INFO, string);
         }
         else {
-            Bukkit.getLogger().log(Level.INFO, "[CoreProtect] " + string);
+            Bukkit.getLogger().log(Level.INFO, "[CoreProtect]" + string);
         }
     }
 
     public static void sendGlobalMessage(CommandSender user, String string) {
         string = translateColorCodes(string);
         if (user instanceof ConsoleCommandSender) {
-            sendMessage(user, Color.DARK_AQUA + "[CoreProtect] " + Color.WHITE + string);
+            sendMessage(user, Phrase.build(Phrase.PREFIX) + Color.WHITE + string);
             return;
         }
 
         Server server = Bukkit.getServer();
-        server.getConsoleSender().sendMessage("[CoreProtect] " + string);
+        server.getConsoleSender().sendMessage(Phrase.build(Phrase.PREFIX) + string);
         for (Player player : server.getOnlinePlayers()) {
             if (player.isOp() && !player.getName().equals(user.getName())) {
-                sendMessage(player, Color.DARK_AQUA + "CoreProtect " + Color.WHITE + "- " + string);
+                sendMessage(player, Phrase.build(Phrase.PREFIX) + string);
             }
         }
         if (user instanceof Player) {
             if (((Player) user).isOnline()) {
-                sendMessage(user, Color.DARK_AQUA + "CoreProtect " + Color.WHITE + "- " + string);
+                sendMessage(user, Phrase.build(Phrase.PREFIX) + string);
             }
         }
     }

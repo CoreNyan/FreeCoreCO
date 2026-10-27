@@ -128,18 +128,18 @@ public class CommandHandler implements CommandExecutor {
                 }
                 else if (corecommand.equals("migrate-db")) {
                     if (!VersionUtils.validDonationKey()) {
-                        Chat.sendMessage(user, Color.DARK_AQUA + "CoreProtect " + Color.WHITE + "- " + Phrase.build(Phrase.DONATION_KEY_REQUIRED));
+                        Chat.sendMessage(user, Phrase.build(Phrase.PREFIX) + Phrase.build(Phrase.DONATION_KEY_REQUIRED));
                     }
                     else {
                         Extensions.runDatabaseMigration(corecommand, user, argumentArray);
                     }
                 }
                 else {
-                    Chat.sendMessage(user, Color.DARK_AQUA + "CoreProtect " + Color.WHITE + "- " + Phrase.build(Phrase.COMMAND_NOT_FOUND, Color.WHITE, "/co " + corecommand));
+                    Chat.sendMessage(user, Phrase.build(Phrase.PREFIX) + Phrase.build(Phrase.COMMAND_NOT_FOUND, Color.WHITE, "/co " + corecommand));
                 }
             }
             else {
-                Chat.sendMessage(user, Color.DARK_AQUA + "CoreProtect " + Color.WHITE + "- " + Phrase.build(Phrase.MISSING_PARAMETERS, Color.WHITE, "/co <parameters>"));
+                Chat.sendMessage(user, Phrase.build(Phrase.PREFIX) + Phrase.build(Phrase.MISSING_PARAMETERS, Color.WHITE, "/co <parameters>"));
             }
 
             if (user.isOp() && versionAlert.get(user.getName()) == null) {

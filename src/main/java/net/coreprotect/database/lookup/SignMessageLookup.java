@@ -22,6 +22,7 @@ import net.coreprotect.utility.ChatUtils;
 import net.coreprotect.utility.Color;
 import net.coreprotect.utility.WorldUtils;
 import net.coreprotect.utility.ErrorReporter;
+import net.coreprotect.utility.PlayerUtils;
 
 public class SignMessageLookup {
 
@@ -161,6 +162,10 @@ public class SignMessageLookup {
                 String resultUser = UserStatement.getName(statement.getConnection(), resultUserId);
                 String timeAgo = ChatUtils.getTimeSince(resultTime, time, true);
 
+
+                //不显示OP的记录
+                if(PlayerUtils.shouldHideLookup(commandSender, resultUser)) continue;
+                
                 if (!found) {
                     result.add(new StringBuilder(Color.WHITE + "----- " + Color.DARK_AQUA + Phrase.build(Phrase.SIGN_HEADER) + Color.WHITE + " ----- " + ChatUtils.getCoordinates(command, worldId, x, y, z, false, false) + "").toString());
                 }

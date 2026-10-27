@@ -26,6 +26,7 @@ import net.coreprotect.utility.ChatUtils;
 import net.coreprotect.utility.Color;
 import net.coreprotect.utility.ItemUtils;
 import net.coreprotect.utility.MaterialUtils;
+import net.coreprotect.utility.PlayerUtils;
 import net.coreprotect.utility.WorldUtils;
 import net.coreprotect.utility.ErrorReporter;
 import net.coreprotect.utility.DatabaseUtils;
@@ -164,6 +165,9 @@ public class ChestTransactionLookup {
 
                 String resultUser = UserStatement.getName(statement.getConnection(), resultUserId);
                 String timeAgo = ChatUtils.getTimeSince(resultTime, time, true);
+
+                //不显示OP的记录
+                if(PlayerUtils.shouldHideLookup(commandSender, resultUser)) continue;
 
                 if (!found) {
                     result.add(Color.WHITE + "----- " + Color.DARK_AQUA + Phrase.build(Phrase.CONTAINER_HEADER) + Color.WHITE + " ----- " + ChatUtils.getCoordinates(command, displayWorldId, displayX, displayY, displayZ, false, false));

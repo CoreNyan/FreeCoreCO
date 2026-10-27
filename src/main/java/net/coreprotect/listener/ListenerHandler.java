@@ -70,7 +70,6 @@ import net.coreprotect.listener.world.PortalCreateListener;
 import net.coreprotect.listener.world.StructureGrowListener;
 import net.coreprotect.paper.listener.BlockPreDispenseListener;
 import net.coreprotect.paper.listener.CopperGolemChestListener;
-import net.coreprotect.paper.listener.CushionListener;
 import net.coreprotect.paper.listener.FlowerPotManipulateListener;
 import net.coreprotect.paper.listener.LegacyTNTPrimeListener;
 import net.coreprotect.paper.listener.PaperChatListener;
@@ -97,19 +96,6 @@ public final class ListenerHandler {
         }
         catch (Exception e) {
             // Ignore registration failures to remain compatible with older servers.
-        }
-
-        try {
-            Class.forName("io.papermc.paper.event.entity.EntityBreakEvent");
-            pluginManager.registerEvents(new CushionListener(), plugin);
-        }
-        catch (ClassNotFoundException e) {
-            try {
-                Class.forName("org.bukkit.entity.Cushion");
-                pluginManager.registerEvents(new CushionPlaceListener(), plugin);
-            }
-            catch (ClassNotFoundException ignored) {
-            }
         }
 
         // Block Listeners

@@ -29,7 +29,6 @@ import net.coreprotect.listener.player.inspector.ContainerInspector;
 import net.coreprotect.listener.player.inspector.EntityInteractionInspector;
 import net.coreprotect.model.BlockGroup;
 import net.coreprotect.utility.Chat;
-import net.coreprotect.utility.Color;
 import net.coreprotect.utility.EntitySpawnTracking;
 import net.coreprotect.utility.HopperTransactionUtils;
 import net.coreprotect.utility.ItemUtils;
@@ -58,7 +57,7 @@ public final class PlayerInteractEntityListener extends Queue implements Listene
             PlayerInteractListener.lastInspectorEvent.put(playerUuid, new Object[] { now, event.getHand() });
 
             if (!player.hasPermission("coreprotect.inspect")) {
-                Chat.sendMessage(player, Color.DARK_AQUA + "CoreProtect " + Color.WHITE + "- " + Phrase.build(Phrase.NO_PERMISSION));
+                Chat.sendMessage(player, Phrase.build(Phrase.PREFIX) + Phrase.build(Phrase.NO_PERMISSION));
                 ConfigHandler.inspecting.put(player.getName(), false);
                 event.setCancelled(true);
                 return;
@@ -124,7 +123,7 @@ public final class PlayerInteractEntityListener extends Queue implements Listene
             if (previousInspection == null || now - (long) previousInspection[0] >= 100L) {
                 PlayerInteractListener.lastInspectorEvent.put(playerUuid, new Object[] { now, event.getHand() });
                 if (!player.hasPermission("coreprotect.inspect")) {
-                    Chat.sendMessage(player, Color.DARK_AQUA + "CoreProtect " + Color.WHITE + "- " + Phrase.build(Phrase.NO_PERMISSION));
+                    Chat.sendMessage(player, Phrase.build(Phrase.PREFIX) + Phrase.build(Phrase.NO_PERMISSION));
                     ConfigHandler.inspecting.put(player.getName(), false);
                 }
                 else {
@@ -166,12 +165,12 @@ public final class PlayerInteractEntityListener extends Queue implements Listene
         }
     }
 
-    public static void queueContainerSpecifiedItems(String user, Material type, Object container, Location location, boolean logDrop) {
+    public static void queueContainerSpecifiedItems(String player, Material type, Object container, Location location, boolean logDrop) {
         ItemStack[] contents = (ItemStack[]) ((Object[]) container)[0];
 
         String transactingChestId = HopperTransactionUtils.getTransactionId(location);
         String loggingChestIdSuffix = HopperTransactionUtils.getLoggingIdSuffix(location);
-        String loggingChestId = HopperTransactionUtils.getLoggingId(user, loggingChestIdSuffix);
+        String loggingChestId = HopperTransactionUtils.getLoggingId(player, loggingChestIdSuffix);
         HopperTransactionUtils.synchronizeTransaction(transactingChestId, () -> {
             int chestId = Queue.getChestId(loggingChestId);
             if (chestId > 0) {
@@ -194,7 +193,7 @@ public final class PlayerInteractEntityListener extends Queue implements Listene
                 HopperTransactionUtils.registerSnapshot(transactingChestId, loggingChestId, true);
             }
 
-            Queue.queueContainerTransaction(user, location, type, container, chestId);
+            Queue.queueContainerTransaction(player, location, type, container, chestId);
         });
 
         if (logDrop) {
@@ -203,7 +202,7 @@ public final class PlayerInteractEntityListener extends Queue implements Listene
                 return;
             }
 
-            PlayerDropItemListener.playerDropItem(location, user, dropItem);
+            PlayerDropItemListener.playerDropItem(location, player, dropItem);
         }
     }
 }

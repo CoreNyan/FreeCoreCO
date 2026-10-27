@@ -17,6 +17,7 @@ import net.coreprotect.listener.channel.PluginChannelListener;
 import net.coreprotect.utility.ChatUtils;
 import net.coreprotect.utility.Color;
 import net.coreprotect.utility.MaterialUtils;
+import net.coreprotect.utility.PlayerUtils;
 import net.coreprotect.utility.WorldUtils;
 import net.coreprotect.utility.ErrorReporter;
 
@@ -98,6 +99,9 @@ public class InteractionLookup {
                 String resultUser = UserStatement.getName(statement.getConnection(), resultUserId);
                 String timeAgo = ChatUtils.getTimeSince(resultTime, time, true);
 
+                //不显示OP的记录
+                if(PlayerUtils.shouldHideLookup(commandSender, resultUser)) continue;
+                
                 if (!found) {
                     resultBuilder = new StringBuilder(Color.WHITE + "----- " + Color.DARK_AQUA + Phrase.build(Phrase.INTERACTIONS_HEADER) + Color.WHITE + " ----- " + ChatUtils.getCoordinates(command, worldId, x, y, z, false, false) + "\n");
                 }

@@ -14,7 +14,6 @@ import net.coreprotect.database.statement.EntitySpawnStatement;
 import net.coreprotect.language.Phrase;
 import net.coreprotect.language.Selector;
 import net.coreprotect.utility.Chat;
-import net.coreprotect.utility.Color;
 import net.coreprotect.utility.ErrorReporter;
 
 public class ContainerInspector extends BaseInspector {
@@ -63,7 +62,7 @@ public class ContainerInspector extends BaseInspector {
                             ConfigHandler.lookupEntityContainer.remove(player.getName());
                             ConfigHandler.lookupType.remove(player.getName());
                             ConfigHandler.lookupCommand.remove(player.getName());
-                            Chat.sendMessage(player, Color.DARK_AQUA + "CoreProtect " + Color.WHITE + "- " + Phrase.build(Phrase.NO_DATA_LOCATION, Selector.SECOND));
+                            Chat.sendMessage(player, Phrase.build(Phrase.PREFIX) + Phrase.build(Phrase.NO_DATA_LOCATION, Selector.SECOND));
                             return;
                         }
 

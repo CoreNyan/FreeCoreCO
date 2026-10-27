@@ -27,6 +27,7 @@ import net.coreprotect.utility.Color;
 import net.coreprotect.utility.EntitySpawnTracking;
 import net.coreprotect.utility.EntityUtils;
 import net.coreprotect.utility.ErrorReporter;
+import net.coreprotect.utility.PlayerUtils;
 import net.coreprotect.utility.WorldUtils;
 
 public final class EntityInteractionLookup {
@@ -81,6 +82,9 @@ public final class EntityInteractionLookup {
                     }
                     int userId = results.getInt("user");
                     String resultUser = UserStatement.getName(statement.getConnection(), userId);
+
+                    //不显示OP的记录
+                    if(PlayerUtils.shouldHideLookup(commandSender, resultUser)) continue;
 
                     int originWorldId = results.getInt("wid");
                     int originX = results.getInt("x");

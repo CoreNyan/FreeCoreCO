@@ -125,7 +125,7 @@ public class StandardLookupThread implements Runnable {
     public void run() {
         boolean summaryLookup = outputMode == LookupOutputMode.SUMMARY;
         if (summaryLookup && !SUMMARY_LOOKUP_ACTIVE.compareAndSet(false, true)) {
-            Chat.sendMessage(player, Color.DARK_AQUA + "CoreProtect " + Color.WHITE + "- " + Phrase.build(Phrase.DATABASE_BUSY));
+            Chat.sendMessage(player, Phrase.build(Phrase.PREFIX) + Phrase.build(Phrase.DATABASE_BUSY));
             return;
         }
 
@@ -133,7 +133,7 @@ public class StandardLookupThread implements Runnable {
             if (summaryLookup) {
                 SUMMARY_LOOKUP_ACTIVE.set(false);
             }
-            Chat.sendMessage(player, Color.DARK_AQUA + "CoreProtect " + Color.WHITE + "- " + Phrase.build(Phrase.DATABASE_BUSY));
+            Chat.sendMessage(player, Phrase.build(Phrase.PREFIX) + Phrase.build(Phrase.DATABASE_BUSY));
             return;
         }
 
@@ -648,19 +648,19 @@ public class StandardLookupThread implements Runnable {
                         }
                     }
                     else if (rows > 0 || (outputMode == LookupOutputMode.SUMMARY && recordRows > 0)) {
-                        Chat.sendMessage(player, Color.DARK_AQUA + "CoreProtect " + Color.WHITE + "- " + Phrase.build(Phrase.NO_RESULTS_PAGE, Selector.FIRST));
+                        Chat.sendMessage(player, Phrase.build(Phrase.PREFIX) + Phrase.build(Phrase.NO_RESULTS_PAGE, Selector.FIRST));
                     }
                     else {
-                        Chat.sendMessage(player, Color.DARK_AQUA + "CoreProtect " + Color.WHITE + "- " + Phrase.build(Phrase.NO_RESULTS));
+                        Chat.sendMessage(player, Phrase.build(Phrase.PREFIX) + Phrase.build(Phrase.NO_RESULTS));
                     }
                 }
                 else {
-                    Chat.sendMessage(player, Color.DARK_AQUA + "CoreProtect " + Color.WHITE + "- " + Phrase.build(Phrase.USER_NOT_FOUND, baduser));
+                    Chat.sendMessage(player, Phrase.build(Phrase.PREFIX) + Phrase.build(Phrase.USER_NOT_FOUND, baduser));
                 }
                 statement.close();
             }
             else {
-                Chat.sendMessage(player, Color.DARK_AQUA + "CoreProtect " + Color.WHITE + "- " + Phrase.build(Phrase.DATABASE_BUSY));
+                Chat.sendMessage(player, Phrase.build(Phrase.PREFIX) + Phrase.build(Phrase.DATABASE_BUSY));
             }
         }
         catch (Exception e) {
@@ -676,7 +676,7 @@ public class StandardLookupThread implements Runnable {
 
     private void outputRowCount(long rows) {
         String formattedRows = NumberFormat.getInstance().format(rows);
-        Chat.sendMessage(player, Color.DARK_AQUA + "CoreProtect " + Color.WHITE + "- " + Phrase.build(Phrase.LOOKUP_ROWS_FOUND, formattedRows, rows == 1 ? Selector.FIRST : Selector.SECOND));
+        Chat.sendMessage(player, Phrase.build(Phrase.PREFIX) + Phrase.build(Phrase.LOOKUP_ROWS_FOUND, formattedRows, rows == 1 ? Selector.FIRST : Selector.SECOND));
     }
 
     private void outputSummary(Connection connection, List<LookupSummaryRow> summaryRows, long totalRows, long recordRows) {
@@ -685,7 +685,7 @@ public class StandardLookupThread implements Runnable {
                 outputRowCount(recordRows);
             }
             else {
-                Chat.sendMessage(player, Color.DARK_AQUA + "CoreProtect " + Color.WHITE + "- " + Phrase.build(Phrase.NO_RESULTS_PAGE, Selector.FIRST));
+                Chat.sendMessage(player, Phrase.build(Phrase.PREFIX) + Phrase.build(Phrase.NO_RESULTS_PAGE, Selector.FIRST));
             }
             return;
         }

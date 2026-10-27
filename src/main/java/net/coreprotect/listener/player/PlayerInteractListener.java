@@ -141,7 +141,7 @@ public final class PlayerInteractListener extends Queue implements Listener {
         }
 
         if (!player.hasPermission("coreprotect.inspect")) {
-            Chat.sendMessage(player, Color.DARK_AQUA + "CoreProtect " + Color.WHITE + "- " + Phrase.build(Phrase.NO_PERMISSION));
+            Chat.sendMessage(player, Phrase.build(Phrase.PREFIX) + Phrase.build(Phrase.NO_PERMISSION));
             ConfigHandler.inspecting.put(player.getName(), false);
             return;
         }
@@ -618,14 +618,14 @@ public final class PlayerInteractListener extends Queue implements Listener {
                         }
 
                         if (!placeCandle) {
-                            String userUUID = player.getUniqueId().toString();
+                            String playerUUID = player.getUniqueId().toString();
                             Location location = player.getLocation();
                             long time = System.currentTimeMillis();
                             int wid = WorldUtils.getWorldId(location.getWorld().getName());
                             int x = location.getBlockX();
                             int y = location.getBlockY();
                             int z = location.getBlockZ();
-                            String coordinates = x + "." + y + "." + z + "." + wid + "." + userUUID;
+                            String coordinates = x + "." + y + "." + z + "." + wid + "." + playerUUID;
                             CacheHandler.interactCache.put(coordinates, new Object[] { time, Material.CAKE, block.getState() });
                         }
                     }
